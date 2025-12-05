@@ -45,29 +45,24 @@ segment_data = pd.DataFrame({
 })
 
 # ========== HEADER DASHBOARD ==========
-with col1:
-    import os
+wwith col1:
+    import base64
     
-    # Cek apakah file ada di beberapa lokasi umum
-    logo_found = False
+    # Function to convert image to base64
+    def get_base64_image(image_path):
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
     
-    # Coba lokasi untuk Streamlit Cloud
-    if os.path.isfile("logo_bankjatim.png"):
-        st.image("logo_bankjatim.png", width=120)
-        logo_found = True
-    elif os.path.isfile("./logo_bankjatim.png"):
-        st.image("./logo_bankjatim.png", width=120)
-        logo_found = True
-    
-    # Jika tidak ketemu, tampilkan placeholder
-    if not logo_found:
-        st.warning("Logo file not found, using placeholder")
-        st.markdown("""
-        <div style="background-color: #D92B2B; padding: 15px; border-radius: 10px; text-align: center;">
-            <h3 style="color: white; margin: 0;">BANK</h3>
-            <h3 style="color: white; margin: 0;">JATIM</h3>
+    try:
+        # Encode logo jika file ada
+        logo_base64 = get_base64_image("logo_bankjatim.png")
+        st.markdown(f"""
+        <div style="text-align: center;">
+            <img src="data:image/png;base64,{logo_base64}" width="120">
         </div>
         """, unsafe_allow_html=True)
+    except:
+        st.image("https://via.placeholder.com/120x120/D92B2B/FFFFFF?text=BANK+JATIM", width=120)
 with col2:
     st.markdown(f"""
     <div style="background-color: {DARK_BLUE}; padding: 25px; border-radius: 10px;">
@@ -290,4 +285,5 @@ st.markdown(f"""
 </div>
 
 """, unsafe_allow_html=True)
+
 
