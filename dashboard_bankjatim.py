@@ -45,16 +45,28 @@ segment_data = pd.DataFrame({
 })
 
 # ========== HEADER DASHBOARD ==========
-col1, col2 = st.columns([1, 5])
 with col1:
-    # Placeholder untuk logo - bisa diganti dengan st.image("logo.png")
-    st.markdown(f"""
-    <div style="background-color: {PRIMARY_RED}; padding: 20px; border-radius: 10px; text-align: center;">
-        <h2 style="color: white; margin: 0;">🏦</h2>
-        <p style="color: white; margin: 5px 0 0 0; font-size: 12px;">BANK JATIM</p>
-    </div>
-    """, unsafe_allow_html=True)
-
+    import os
+    # Coba beberapa path umum
+    logo_paths = [
+        "logo_bankjatim.png",           # Local testing
+        "./logo_bankjatim.png",         # Current directory
+        "bank-jatim-dashboard/logo_bankjatim.png",  # Cloud path
+    ]
+    
+    for path in logo_paths:
+        if os.path.exists(path):
+            st.image(path, width=120)
+            break
+    else:
+        st.error("Logo tidak ditemukan!")
+        # Fallback: tampilkan placeholder
+        st.markdown(f"""
+        <div style="background-color: {PRIMARY_RED}; padding: 20px; border-radius: 10px; text-align: center;">
+            <h2 style="color: white; margin: 0;">🏦</h2>
+            <p style="color: white; margin: 5px 0 0 0; font-size: 12px;">BANK JATIM</p>
+        </div>
+        """, unsafe_allow_html=True)
 with col2:
     st.markdown(f"""
     <div style="background-color: {DARK_BLUE}; padding: 25px; border-radius: 10px;">
@@ -275,4 +287,5 @@ st.markdown(f"""
         ⚠️ Perhatian khusus diperlukan pada peningkatan NPL Gross (2024: 3.45%) dan BOPO (2024: 81.89%)
     </p>
 </div>
+
 """, unsafe_allow_html=True)
