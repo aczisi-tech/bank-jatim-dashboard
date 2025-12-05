@@ -47,24 +47,25 @@ segment_data = pd.DataFrame({
 # ========== HEADER DASHBOARD ==========
 with col1:
     import os
-    # Coba beberapa path umum
-    logo_paths = [
-        "logo_bankjatim.png",           # Local testing
-        "./logo_bankjatim.png",         # Current directory
-        "bank-jatim-dashboard/logo_bankjatim.png",  # Cloud path
-    ]
     
-    for path in logo_paths:
-        if os.path.exists(path):
-            st.image(path, width=120)
-            break
-    else:
-        st.error("Logo tidak ditemukan!")
-        # Fallback: tampilkan placeholder
-        st.markdown(f"""
-        <div style="background-color: {PRIMARY_RED}; padding: 20px; border-radius: 10px; text-align: center;">
-            <h2 style="color: white; margin: 0;">🏦</h2>
-            <p style="color: white; margin: 5px 0 0 0; font-size: 12px;">BANK JATIM</p>
+    # Cek apakah file ada di beberapa lokasi umum
+    logo_found = False
+    
+    # Coba lokasi untuk Streamlit Cloud
+    if os.path.isfile("logo_bankjatim.png"):
+        st.image("logo_bankjatim.png", width=120)
+        logo_found = True
+    elif os.path.isfile("./logo_bankjatim.png"):
+        st.image("./logo_bankjatim.png", width=120)
+        logo_found = True
+    
+    # Jika tidak ketemu, tampilkan placeholder
+    if not logo_found:
+        st.warning("Logo file not found, using placeholder")
+        st.markdown("""
+        <div style="background-color: #D92B2B; padding: 15px; border-radius: 10px; text-align: center;">
+            <h3 style="color: white; margin: 0;">BANK</h3>
+            <h3 style="color: white; margin: 0;">JATIM</h3>
         </div>
         """, unsafe_allow_html=True)
 with col2:
@@ -289,3 +290,4 @@ st.markdown(f"""
 </div>
 
 """, unsafe_allow_html=True)
+
